@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertical Buttons</title>
+<style>
+   body {
+      background-color: rgba(20, 20, 20, 1);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .button-container {
+      text-align: center;
+    }
+
+    .button {
+      display: block;
+      height: 50px;
+      width: 250px;
+      padding: 10px 20px;
+      font-size: 17px;
+      background-color: #800000;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px auto;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color:#800000;
+    }
+</style>
+</head>
+</style>
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center" style="height: 100vh; flex-direction: column;">
+  <div class="text-center">
+    <div class="mb-4">
+      <img src="png-transparent-call-centre-customer-service-computer-icons-call-centre-miscellaneous-face-telephone-call.png" alt="Icon" style="max-width: 100px;">
+    </div>
+  <div class="button-container">
+    <!-- Add type="submit" to make these buttons submit the form -->
+    <button class="button submit-button" type="submit" onclick="handleButtonClick(1)">ارسال بلاغ</button>
+    <button class="button submit-button" type="submit" onclick="handleButtonClick(2)">متابعه بلاغ</button>
+    <button class="button submit-button" type="submit" onclick="handleButtonClick(3)">طلب حمايه</button>
+    <button class="button submit-button" type="submit" onclick="handleButtonClick(4)">استشاره قانونيه</button>
+    <button class="button submit-button" type="submit" onclick="handleButtonClick(5)">تواصل معنا</button>
+  </div>
+<script>
+    function get_page(url)
+{
+    window.location.href = url;
+}
+
+    function handleButtonClick(buttonId) {
+        switch(buttonId) {
+            case 1:
+                get_page("/Whistleblower");
+                break;
+            case 2:
+            get_page("/register");
+                break;
+            case 3:
+            get_page("/request_protect");
+                // Add code to handle button 3 click
+                break;
+            case 4:
+              get_page("/bot");
+                break;
+            case 5:
+                alert('Button 5 clicked!');
+                // Add code to handle button 3 click
+                break;
+            default:
+                console.error('Unknown button clicked!');
+        }
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

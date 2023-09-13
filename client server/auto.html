@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <!-- Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Your additional CSS (if any) */
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="chat-container">
+                    <div id="chat-display"></div>
+                    <div class="input-group mt-3">
+                        <input type="text" id="message-input" class="form-control" autocomplete="off" placeholder="Type a message...">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS scripts (jQuery required) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value;
+            messageInput.value = '';
+
+            const chatDisplay = document.getElementById('chat-display');
+            const timestamp = new Date().toLocaleTimeString();
+            chatDisplay.innerHTML += `
+                <div class="media mb-3">
+                    <div class="media-body user-message">
+                        <p>${message}</p>
+                        <small class="text-muted">${timestamp}</small>
+                    </div>
+                </div>
+            `;
+
+            // Simulate a bot response after a short delay
+            setTimeout(() => {
+                const botMessage = "This is a bot response.";
+                const botTimestamp = new Date().toLocaleTimeString();
+                
+           fetch('/bot', {
+                method: 'POST',
+                headers: {
+            'Content-Type': 'application/json'
+        },
+                body:JSON.stringify({"message":message})
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatDisplay.innerHTML += `<div class="message bot-message">${data.response}</div>`;
+            });
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>نموذج تقرير الشخص المُبلِّغ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            direction:rtl;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        label {
+            color: maroon;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        input[type="submit"] {
+            background-color: maroon;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 4px;
+            padding: 10px 20px;
+            width: auto;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #800000;
+        }
+    </style>
+</head>
+<body>
+    <form  id="reportForm"  enctype="multipart/form-data">
+        <label for="contact">رقم الاتصال:</label>
+        <input type="text" id="contact" name="contact">
+
+        <label for="defendant">المشتكي عليه:</label>
+        <input id="defendant" name="defendant"></input>
+
+        <label for="reporttitle">عنوان الشكوي:</label>
+        <select id="reporttitle" name="reporttitle">
+            <option value="money-laundering">غسيل أموال</option>
+            <option value="abuse-of-authority">استغلال السلطات</option>
+            <option value="bribery">رشوه</option>
+            <option value="forgery">تزوير</option>
+            <option value="racial-discrimination">تمييز عنصري</option>
+            <option value="harassment">تحرش</option>
+            <option value="fraud">احتيال</option>
+            <option value="fraud">مواد مخدره</option>
+            <option value="other">اخري</option>
+        </select>
+
+        <label for="report">الشكوي:</label>
+        <textarea id="report" name="report" rows="4" cols="50"></textarea>
+
+        <label for="documents">رفع الوثائق (متعددة):</label>
+        <input type="file" id="documents" name="documents" multiple>
+
+        <input type="submit" value="إرسال التقرير" onclick="submitForm()">
+    </form>
+    <script>
+    function formatDate(date) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    let day = date.getDate();
+    let month = date.getMonth() + 1; // Month is 0-based, so we add 1
+    let year = date.getFullYear();
+
+    // Add leading zero if needed
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
+
+    return `${hours}:${minutes}:${seconds} ${day}-${month}-${year}`;
+}
+
+
+    function submitForm() {
+    var formData = new FormData(document.getElementById('reportForm')); // Create FormData object
+    var serializedData = {};
+
+    formData.forEach(function(value, key) {
+        serializedData[key] = value;
+    });
+    const currentDate = new Date();
+    const currentDateTime = formatDate(currentDate);
+
+    serializedData['date'] = currentDateTime;
+    fetch('/submit_report', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(serializedData)
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert("  قم بنسخ الرقم للمتابعه  " + data);
+    })
+    .catch(error => {
+        alert("error");
+    });
+}
+
+          
+    </script>
+</body>
+</html>
+
+
+
+
